@@ -201,7 +201,16 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            //check if animal is in DB
+            var animalToRemove = db.Animals.Where(e => e.AnimalId == animal.AnimalId && e.Name == animal.Name).FirstOrDefault();
+
+            //if not null remove
+            if (animalToRemove != null) 
+            {
+                db.Animals.DeleteOnSubmit(animalToRemove);
+                db.SubmitChanges();
+            }
+            else { throw new ArgumentNullException(); }
         }
         
         // TODO: Animal Multi-Trait Search

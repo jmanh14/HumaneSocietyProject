@@ -18,8 +18,9 @@ namespace HumaneSociety
             humainlyTestedAnimal.Gender = "Male";
             humainlyTestedAnimal.Age = 10;
             humainlyTestedAnimal.Name = "Laika";
+            humainlyTestedAnimal.AnimalId = 13;
 
-            Query.AddAnimal(humainlyTestedAnimal);
+            Query.RemoveAnimal(humainlyTestedAnimal);
         }
     }
 }
