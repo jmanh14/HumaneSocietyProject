@@ -1,0 +1,5 @@
+insert into Employees values ('Slash', 'Kennedy', 'slady', 'gunsnroses', 1985, 'slady@humsoc.org')
+insert into Employees values ('Beyonce', 'Knowles', 'beyles', 'destinyschild', 1997, 'beyles@humsoc.org')
+insert into Employees values ('John', 'Fogerty', 'johrty', 'creedence', 1967, 'johrty@humsoc.org')
+insert into Employees values ('Joan', 'Jett', 'joatt', 'blackhearts', 1981, 'joatt@humsoc.org')
+insert into Employees values ('Freddie', 'Mercury', 'freury', 'queen', 1970, 'freury@humsoc.org')

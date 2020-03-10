@@ -1,0 +1,6 @@
+insert into DietPlans values ('Dog Food','Dry', 2)
+insert into DietPlans values ('Cat Food', 'Lasagna', 3)
+insert into DietPlans values ('Rabbit Food', 'Carrot', 1)
+insert into DietPlans values ('Lizard Food', 'Cricket', 1)
+insert into DietPlans values ('Snake Food', 'Mice', 1)
+insert into DietPlans values ('Penguin Food', 'Tuna', 2)
