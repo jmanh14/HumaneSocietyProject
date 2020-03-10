@@ -172,7 +172,21 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            //Add An Animal to the Database;
+            var data = db.Animals.Where(e => e.AnimalId == animal.AnimalId && e.Name == animal.Name).FirstOrDefault();
+            //Check if the animal is already in the database;
+            if (data == null)
+            {
+                db.Animals.InsertOnSubmit(animal);
+                db.SubmitChanges();
+            }
+            else 
+            {
+                throw new OperationCanceledException();
+                //Animal ID && Name Fed in was alreay in DATABASE;
+            }
+            //add if not;
+            //Throw Exception if it is.
         }
 
         internal static Animal GetAnimalByID(int id)
@@ -202,9 +216,13 @@ namespace HumaneSociety
             //Get the animals Category; 
             int categoryIDfromDB = 0;
             var data = db.Categories.Where(e => e.Name == categoryName);
-            if (data != null) 
+            if (data != null)
             {
                 categoryIDfromDB = data.Select(e => e.CategoryId).FirstOrDefault();
+            }
+            else 
+            {
+                throw new ArgumentNullException();
             }
             return categoryIDfromDB;
         }
