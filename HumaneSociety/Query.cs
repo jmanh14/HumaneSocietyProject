@@ -199,7 +199,14 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            //Get the animals Category; 
+            int categoryIDfromDB = 0;
+            var data = db.Categories.Where(e => e.Name == categoryName);
+            if (data != null) 
+            {
+                categoryIDfromDB = data.Select(e => e.CategoryId).FirstOrDefault();
+            }
+            return categoryIDfromDB;
         }
         
         internal static Room GetRoom(int animalId)
