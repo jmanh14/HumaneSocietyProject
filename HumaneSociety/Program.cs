@@ -14,13 +14,9 @@ namespace HumaneSociety
 
 
             //Laika still out here!
-            Animal humainlyTestedAnimal = new Animal();
-            humainlyTestedAnimal.Gender = "Male";
-            humainlyTestedAnimal.Age = 10;
-            humainlyTestedAnimal.Name = "Laika";
-            humainlyTestedAnimal.AnimalId = 13;
+            Animal humainlyTestedAnimal = Query.GetAnimalByID(7);
 
-            Query.RemoveAnimal(humainlyTestedAnimal);
+            
         }
     }
 }
