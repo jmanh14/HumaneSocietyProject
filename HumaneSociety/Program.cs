@@ -10,6 +10,15 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
+            // PointOfEntry.Run();
+            Employee employee = new Employee();
+            employee.EmployeeId = 10;
+            //employee.FirstName = "J";
+            //Query.RunEmployeeQueries(employee, "create");
+            Query.RunEmployeeQueries(employee, "delete");
+        }  
+=======
             //PointOfEntry.Run();
 
 
@@ -18,5 +27,6 @@ namespace HumaneSociety
 
             
         }
+>>>>>>> 7162cf9f71e5d0452e734462fd26f8a9f3af0324
     }
 }
