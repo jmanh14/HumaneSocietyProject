@@ -13,7 +13,11 @@ namespace HumaneSociety
             // PointOfEntry.Run();
 
             //Laika still out here!
-            Animal humainlyTestedAnimal = Query.GetAnimalByID(7);
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+            dict.Add(8, "12");
+
+            Query.UpdateAnimal(7, dict);
+
         }  
           
             

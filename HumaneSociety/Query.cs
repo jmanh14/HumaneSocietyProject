@@ -223,13 +223,48 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
+
             foreach (KeyValuePair<int, string> keyValuePair in updates) 
             {
+                var animalObject = db.Animals.Where(e => e.AnimalId == animalId).FirstOrDefault();//Get An Animal Object.
+                //Commands come from line 187: User Employee 
+                //Paramaters for cases come from: Line 193 in user Interface. 
                 //this is where we update for every animal.
-
+                switch (keyValuePair.Key)
+                {
+                    //Update: Param, New_Value(Dictionary Value)
+                    case 1://Category
+                        var categoryID = GetCategoryId(keyValuePair.Value); // Get the ID Of the animal.
+                        animalObject.CategoryId = categoryID;
+                        break;
+                    case 2://Name, New_Name, 
+                        var name = keyValuePair.Value;
+                        animalObject.Name = name;
+                        break;
+                    case 3://Age
+                        var newAge = Convert.ToInt32(keyValuePair.Value);
+                        animalObject.Age = newAge;
+                        break;
+                    case 4://Demeanor
+                        var newDemeanor = keyValuePair.Value;
+                        animalObject.Demeanor = newDemeanor;
+                        break;
+                    case 5://Kid Friendly, True/False.ToString(),
+                        var KidFriendlyStatus = keyValuePair.Value;
+                        animalObject.KidFriendly = Convert.ToBoolean(KidFriendlyStatus);
+                        break;
+                    case 6://Pet Friendly, T/F.ToString()
+                        var PetFriendlyStatus = keyValuePair.Value;
+                        animalObject.PetFriendly = Convert.ToBoolean(PetFriendlyStatus);
+                        break;
+                    case 7://Weight DictionaryVal= String
+                        var newWeight = Convert.ToInt32(keyValuePair.Value);
+                        animalObject.Weight = newWeight;
+                        break;
+                }
+                db.SubmitChanges();
                 //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
             }
-            throw new NotImplementedException();
         }
 
         internal static void RemoveAnimal(Animal animal)
