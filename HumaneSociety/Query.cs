@@ -168,16 +168,24 @@ namespace HumaneSociety
         {
             switch (crudOperation)
             {
-                case ("update"):                   
-                   var data = db.Employees.SingleOrDefault(a => a.EmployeeId == employee.EmployeeId);
-                      if (data != null)
-                      {
-                          data.FirstName = employee.FirstName;
-                          data.LastName = employee.LastName;
-                          data.EmployeeNumber = employee.EmployeeNumber;
-                          data.Email = employee.Email;
-                      }
-                      db.SubmitChanges();                 
+                case ("update"):
+                    try
+                    {
+                        var data = db.Employees.SingleOrDefault(a => a.EmployeeId == employee.EmployeeId);
+                        if (data != null)
+                        {
+                            data.FirstName = employee.FirstName;
+                            data.LastName = employee.LastName;
+                            data.EmployeeNumber = employee.EmployeeNumber;
+                            data.Email = employee.Email;
+                            db.SubmitChanges();
+                        }
+                        
+                    }
+                    catch
+                    {
+                        throw new MissingFieldException();
+                    }
                     break;
                 case ("read"):
                     var employeeData = db.Employees.Select(a => a).Where(b => b.EmployeeId == employee.EmployeeId);
@@ -221,11 +229,7 @@ namespace HumaneSociety
             return animalToReturnFromDB;
         }
 
-        internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-<<<<<<< HEAD
-        {            
-            throw new NotImplementedException();
-=======
+        internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)        
         {
 
             foreach (KeyValuePair<int, string> keyValuePair in updates) 
@@ -269,7 +273,6 @@ namespace HumaneSociety
                 db.SubmitChanges();
                 //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
             }
->>>>>>> 7862f7729ce0439276ad98b14bd6e31c15101cce
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -324,7 +327,21 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            var animalToBeAdopted = db.Animals.Where(b => b.AnimalId == animal.AnimalId).FirstOrDefault();
+            var clientThatAdopts = db.Clients.Where(a => a.ClientId == client.ClientId).FirstOrDefault();
+            Adoption adoption = new Adoption
+            {
+                Animal = animalToBeAdopted,
+                Client = clientThatAdopts,
+                AdoptionFee = 75,
+                PaymentCollected = true,
+                ApprovalStatus = "Approved",
+                AnimalId = animalToBeAdopted.AnimalId,
+                ClientId = clientThatAdopts.ClientId
+            };
+            animalToBeAdopted.AdoptionStatus = "Approved";
+            bool isAdopted = true;
+            UpdateAdoption(isAdopted, adoption);
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
@@ -335,7 +352,17 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if (isAdopted)
+            {
+                db.Adoptions.InsertOnSubmit(adoption);
+                db.SubmitChanges();
+            }
+            else
+            {
+                adoption.ApprovalStatus = "Available";
+                adoption.PaymentCollected = false;
+                db.SubmitChanges();
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
@@ -352,10 +379,10 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            var shotToUpdate = db.AnimalShots.Select(a => a).Where(b => b.Shot.Name == shotName).FirstOrDefault();
+            var shotToUpdate = db.AnimalShots.Select(a => a).Where(b => b.Shot.Name == shotName && b.AnimalId == animal.AnimalId).FirstOrDefault();
             if (shotToUpdate != null )
             {
-                shotToUpdate.DateReceived = DateTime.Now.AddDays(1);
+                shotToUpdate.DateReceived = DateTime.Now;
             }
             db.SubmitChanges();
         }
