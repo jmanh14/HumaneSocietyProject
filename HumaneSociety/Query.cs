@@ -222,13 +222,7 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {
-            foreach (KeyValuePair<int, string> keyValuePair in updates) 
-            {
-                //this is where we update for every animal.
-
-                //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
-            }
+        {            
             throw new NotImplementedException();
         }
 
@@ -271,12 +265,14 @@ namespace HumaneSociety
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            var roomToGet = db.Rooms.Where(b => b.RoomId == animalId).FirstOrDefault();
+            return roomToGet;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            var dietPlanToGet = db.DietPlans.Where(a => a.Name == dietPlanName).FirstOrDefault();
+            return dietPlanToGet.DietPlanId;
         }
 
         // TODO: Adoption CRUD Operations
@@ -287,7 +283,8 @@ namespace HumaneSociety
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            var pendingAdoptions = db.Adoptions.Select(a => a).Where(b => b.Animal.AdoptionStatus == "Pending");
+            return pendingAdoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
@@ -303,12 +300,18 @@ namespace HumaneSociety
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            var shotsToGet = db.AnimalShots.Where(b => b.AnimalId == animal.AnimalId);
+            return shotsToGet;
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+            var shotToUpdate = db.AnimalShots.Select(a => a).Where(b => b.Shot.Name == shotName).FirstOrDefault();
+            if (shotToUpdate != null )
+            {
+                shotToUpdate.DateReceived = DateTime.Now.AddDays(1);
+            }
+            db.SubmitChanges();
         }
     }
 }

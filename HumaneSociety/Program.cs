@@ -10,13 +10,12 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            // PointOfEntry.Run();
-
-            //Laika still out here!
-            Animal humainlyTestedAnimal = Query.GetAnimalByID(7);
-        }  
-          
-            
-        
+            var db = new HumaneSocietyDataContext();
+            //PointOfEntry.Run();
+            var animal = db.Animals.Select(a => a).Where(b => b.Name == "Laika").FirstOrDefault();
+            Query.GetShots(animal);
+            Query.UpdateShot("Parvo", animal);
+           
+        }
     }
 }
