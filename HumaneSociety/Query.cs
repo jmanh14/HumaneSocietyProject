@@ -262,9 +262,9 @@ namespace HumaneSociety
                         animalObject.Weight = newWeight;
                         break;
                 }
-                db.SubmitChanges();
                 //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
             }
+            db.SubmitChanges();
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -284,7 +284,40 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            throw new NotImplementedException();
+            //"1. Category", "2. Name", "3. Age", "4. Demeanor", "5. Kid friendly", "6. Pet friendly", "7. Weight", "8. ID", "9. Finished"
+            IQueryable<Animal> animaList = null;
+            foreach (KeyValuePair<int, string> keyValuePair in updates) 
+            {
+                switch (keyValuePair.Key) 
+                {
+                    case 1:
+                        int categoryId = GetCategoryId(keyValuePair.Value);
+                        animaList = db.Animals.Where(a => a.CategoryId == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                    case 2:
+                        animaList = db.Animals.Where(a => a.Name == keyValuePair.Value);
+                        break;
+                    case 3:
+                        animaList = db.Animals.Where(a => a.Age == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                    case 4:
+                        animaList = db.Animals.Where(a => a.Demeanor == keyValuePair.Value);
+                        break;
+                    case 5:
+                        animaList = db.Animals.Where(a => a.KidFriendly == Convert.ToBoolean(keyValuePair.Value));
+                        break;
+                    case 6:
+                        animaList = db.Animals.Where(a => a.PetFriendly == Convert.ToBoolean(keyValuePair.Value));
+                        break;
+                    case 7:
+                        animaList = db.Animals.Where(a => a.Weight == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                    case 8:
+                        animaList = db.Animals.Where(a => a.AnimalId == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                }
+            }
+            return animaList;
         }
          
         // TODO: Misc Animal Things
@@ -345,5 +378,6 @@ namespace HumaneSociety
         {
             throw new NotImplementedException();
         }
+
     }
 }
