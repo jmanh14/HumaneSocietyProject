@@ -293,7 +293,7 @@ namespace HumaneSociety
                 {
                     case 1:
                         int categoryId = GetCategoryId(keyValuePair.Value);
-                        animaList = db.Animals.Where(a => a.CategoryId == Convert.ToInt32(keyValuePair.Value));
+                        animaList = db.Animals.Where(a => a.CategoryId == categoryId);
                         break;
                     case 2:
                         animaList = db.Animals.Where(a => a.Name == keyValuePair.Value);
@@ -369,7 +369,11 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var adoptionObject = db.Adoptions.Where(a => a.ClientId == clientId).Where(a => a.AnimalId == animalId).FirstOrDefault();
+            bool isAdopted = false;
+            UpdateAdoption(isAdopted, adoptionObject);
+            db.Adoptions.DeleteOnSubmit(adoptionObject);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
