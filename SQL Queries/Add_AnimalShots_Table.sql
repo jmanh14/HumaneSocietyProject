@@ -1,0 +1,8 @@
+insert into AnimalShots(AnimalId, ShotId, DateReceived) values(7,1,GETDATE())
+insert into AnimalShots values(7,2,GETDATE())
+insert into AnimalShots values(8,3,GETDATE())
+insert into AnimalShots values(8,4,GETDATE())
+insert into AnimalShots values(9,5,GETDATE())
+insert into AnimalShots values(10,6,GETDATE())
+insert into AnimalShots values(11,6,GETDATE())
+insert into AnimalShots values(12,7,GETDATE())
