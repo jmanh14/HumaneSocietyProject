@@ -222,7 +222,13 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {            
+        {
+            foreach (KeyValuePair<int, string> keyValuePair in updates) 
+            {
+                //this is where we update for every animal.
+
+                //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
+            }
             throw new NotImplementedException();
         }
 
