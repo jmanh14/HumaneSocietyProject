@@ -229,9 +229,14 @@ namespace HumaneSociety
             return animalToReturnFromDB;
         }
 
+<<<<<<< HEAD
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)        
         {
+=======
+        internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
+>>>>>>> 4d2477e0352ba4781ca1d8c65d69a341d9b2e257
 
+        {            
             foreach (KeyValuePair<int, string> keyValuePair in updates) 
             {
                 var animalObject = db.Animals.Where(e => e.AnimalId == animalId).FirstOrDefault();//Get An Animal Object.
@@ -270,9 +275,13 @@ namespace HumaneSociety
                         animalObject.Weight = newWeight;
                         break;
                 }
-                db.SubmitChanges();
                 //TODO: FIGURE OUT WHAT TO RUN WITH THE DICTIONARY VALUES.
             }
+<<<<<<< HEAD
+=======
+
+            db.SubmitChanges();
+>>>>>>> 4d2477e0352ba4781ca1d8c65d69a341d9b2e257
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -292,7 +301,40 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            throw new NotImplementedException();
+            //"1. Category", "2. Name", "3. Age", "4. Demeanor", "5. Kid friendly", "6. Pet friendly", "7. Weight", "8. ID", "9. Finished"
+            IQueryable<Animal> animaList = null;
+            foreach (KeyValuePair<int, string> keyValuePair in updates) 
+            {
+                switch (keyValuePair.Key) 
+                {
+                    case 1:
+                        int categoryId = GetCategoryId(keyValuePair.Value);
+                        animaList = db.Animals.Where(a => a.CategoryId == categoryId);
+                        break;
+                    case 2:
+                        animaList = db.Animals.Where(a => a.Name == keyValuePair.Value);
+                        break;
+                    case 3:
+                        animaList = db.Animals.Where(a => a.Age == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                    case 4:
+                        animaList = db.Animals.Where(a => a.Demeanor == keyValuePair.Value);
+                        break;
+                    case 5:
+                        animaList = db.Animals.Where(a => a.KidFriendly == Convert.ToBoolean(keyValuePair.Value));
+                        break;
+                    case 6:
+                        animaList = db.Animals.Where(a => a.PetFriendly == Convert.ToBoolean(keyValuePair.Value));
+                        break;
+                    case 7:
+                        animaList = db.Animals.Where(a => a.Weight == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                    case 8:
+                        animaList = db.Animals.Where(a => a.AnimalId == Convert.ToInt32(keyValuePair.Value));
+                        break;
+                }
+            }
+            return animaList;
         }
          
         // TODO: Misc Animal Things
@@ -367,7 +409,11 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var adoptionObject = db.Adoptions.Where(a => a.ClientId == clientId).Where(a => a.AnimalId == animalId).FirstOrDefault();
+            bool isAdopted = false;
+            UpdateAdoption(isAdopted, adoptionObject);
+            db.Adoptions.DeleteOnSubmit(adoptionObject);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
@@ -386,5 +432,6 @@ namespace HumaneSociety
             }
             db.SubmitChanges();
         }
+
     }
 }

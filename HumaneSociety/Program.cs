@@ -10,7 +10,16 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
             //PointOfEntry.Run();
         }
     }
+=======
+
+            // PointOfEntry.Run();
+            
+        }
+
+    }  
+>>>>>>> 4d2477e0352ba4781ca1d8c65d69a341d9b2e257
 }
